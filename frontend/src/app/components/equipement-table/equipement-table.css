@@ -1,0 +1,11 @@
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--primary); font-weight: 700; border-bottom: 2px solid var(--primary-soft); }
+tbody tr:hover { background: var(--hover); }
+tr.editing { background: var(--accent-soft); box-shadow: inset 4px 0 0 var(--accent); }
+tfoot td { font-weight: 700; color: var(--primary); border-bottom: none; border-top: 2px solid var(--primary-soft); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.actions-col { text-align: right; }
+.actions-col .btn + .btn { margin-left: 6px; }
+.confirm { margin-right: 6px; font-size: 0.85rem; color: var(--danger); }

@@ -1,0 +1,49 @@
+@if (equipements().length === 0) {
+  <p class="muted">Aucune saisie.</p>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Type d'équipement</th>
+          <th>Date début</th>
+          <th>Date fin</th>
+          <th class="num">Nombre</th>
+          <th class="actions-col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of equipements(); track e.id) {
+          <tr [class.editing]="editionId() === e.id">
+            <td>{{ e.type_equipement_nom }}</td>
+            <td>{{ e.date_debut | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ e.date_fin | date: 'dd/MM/yyyy' }}</td>
+            <td class="num">{{ e.nombre | number: '1.0-0' }}</td>
+
+            <td class="actions-col">
+              @if (suppressionId() === e.id) {
+                <span class="confirm">Supprimer ?</span>
+                <button class="btn btn-small btn-danger" type="button" (click)="confirmer(e)">Oui</button>
+                <button class="btn btn-small btn-ghost" type="button" (click)="suppressionId.set(null)">Non</button>
+              } @else {
+                <button class="btn btn-small" type="button" (click)="edit.emit(e)">Modifier</button>
+                <button class="btn btn-small btn-ghost-danger" type="button" (click)="suppressionId.set(e.id)">
+                  Supprimer
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+      @if (afficherTotal()) {
+        <tfoot>
+          <tr>
+            <td colspan="3">Total</td>
+            <td class="num">{{ total() | number: '1.0-0' }}</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      }
+    </table>
+  </div>
+}

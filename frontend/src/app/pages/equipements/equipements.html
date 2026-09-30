@@ -1,0 +1,54 @@
+<app-navbar />
+
+<main class="page">
+  <!-- Formulaire de saisie -->
+  <section class="card">
+    <app-equipement-form
+      [types]="types()"
+      [equipement]="enEdition()"
+      [enregistrement]="enregistrement()"
+      (save)="enregistrer($event)"
+      (cancel)="annuler()"
+    />
+
+    @if (erreur()) {
+      <div class="alert alert-error">
+        <span>{{ erreur() }}</span>
+        @if (conflit(); as c) {
+          <button class="btn btn-small" type="button" (click)="modifier(c)">Modifier l'entrée existante</button>
+        }
+      </div>
+    }
+    @if (succes()) {
+      <p class="alert alert-success">{{ succes() }}</p>
+    }
+  </section>
+
+  <!-- Liste -->
+  <section class="card">
+    <div class="list-head">
+      <h2>Équipements <span class="muted">({{ equipementsFiltres().length }})</span></h2>
+      <label class="filter">
+        Filtrer par type
+        <select (change)="onFiltre($any($event.target).value)">
+          <option value="">Tous les types</option>
+          @for (t of types(); track t.id) {
+            <option [value]="t.id">{{ t.nom }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    @if (chargement()) {
+      <p class="muted">Chargement…</p>
+    } @else {
+      <app-equipement-table
+        [equipements]="equipementsFiltres()"
+        [editionId]="enEdition()?.id ?? null"
+        [afficherTotal]="filtreType() !== null"
+        (edit)="modifier($event)"
+        (remove)="supprimer($event)"
+      />
+    }
+  </section>
+</main>

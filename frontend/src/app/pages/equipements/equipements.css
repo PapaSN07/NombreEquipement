@@ -1,0 +1,6 @@
+.page { max-width: 1100px; margin: 0 auto; padding: 24px 16px; display: flex; flex-direction: column; gap: 20px; }
+h2 { font-size: 1.05rem; margin: 0; color: var(--primary); }
+
+.list-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.filter { flex-direction: row; align-items: center; gap: 8px; }
+.filter select { width: auto; }

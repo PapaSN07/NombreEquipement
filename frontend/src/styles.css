@@ -1,0 +1,77 @@
+:root {
+  /* Palette Senelec — 3 couleurs retenues sur 5 :
+     bleu (principal), orange (accent), vert canard (succès).
+     Le rouge des erreurs reste un rouge standard, hors charte, pour signaler clairement une alerte. */
+  --senelec-bleu: #073a8b;
+  --senelec-orange: #f39b48;
+  --senelec-vert: #118a9a;
+
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --text: #16213a;
+  --muted: #5d6a80;
+  --border: #dfe4ed;
+  --hover: #f6f8fc;
+
+  --primary: var(--senelec-bleu);
+  --primary-hover: #052c6b;
+  --primary-soft: #e7edf7;
+  --accent: var(--senelec-orange);
+  --accent-soft: #fdf0e3;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --success: var(--senelec-vert);
+  --success-soft: #e4f4f6;
+
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.45;
+}
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.muted { color: var(--muted); font-weight: normal; }
+
+.brand-mark {
+  display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 8px;
+  background: var(--accent); color: var(--senelec-bleu); font-weight: 800;
+}
+/* Liseré d'accent orange (sous la barre, en haut de la carte de connexion) */
+.brand-stripe { height: 4px; background: var(--accent); }
+
+label { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; font-weight: 500; color: var(--muted); }
+input, select {
+  min-width: 0;
+  width: 100%; font: inherit; font-size: 0.95rem; color: var(--text);
+  padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; background: #fff;
+}
+input:focus, select:focus { outline: 3px solid var(--primary-soft); border-color: var(--primary); }
+input.ng-touched.ng-invalid, select.ng-touched.ng-invalid { border-color: var(--danger); }
+
+.btn {
+  font: inherit; font-size: 0.92rem; font-weight: 500; cursor: pointer;
+  padding: 9px 16px; border-radius: 6px; border: 1px solid var(--border);
+  background: #fff; color: var(--text); white-space: nowrap;
+}
+.btn:hover { background: var(--hover); }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+.btn-ghost { background: transparent; border-color: transparent; }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-ghost-danger { background: transparent; border-color: transparent; color: var(--danger); }
+.btn-ghost-danger:hover { background: var(--danger-soft); }
+.btn-small { padding: 5px 10px; font-size: 0.85rem; }
+
+.alert {
+  margin: 14px 0 0; padding: 10px 12px; border-radius: 6px; font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.alert-error { background: var(--danger-soft); color: var(--danger); }
+/* Texte foncé + bordure vert canard : le vert seul est trop clair pour du petit texte */
+.alert-success { background: var(--success-soft); color: var(--text); box-shadow: inset 4px 0 0 var(--success); }

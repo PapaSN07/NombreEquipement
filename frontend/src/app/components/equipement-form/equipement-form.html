@@ -1,0 +1,44 @@
+<h2>{{ equipement() ? 'Modifier la saisie' : 'Nouvelle saisie' }}</h2>
+
+<form class="grid-form" [formGroup]="form" (ngSubmit)="submit()">
+  <label>
+    Type d'équipement
+    <select formControlName="type_equipement_id">
+      <option [ngValue]="null" disabled>— Choisir —</option>
+      @for (t of types(); track t.id) {
+        <option [ngValue]="t.id">{{ t.nom }}</option>
+      }
+    </select>
+  </label>
+  <label>
+    Date début
+    <input type="date" formControlName="date_debut" />
+  </label>
+  <label>
+    Date fin
+    <input type="date" formControlName="date_fin" />
+  </label>
+  <label>
+    Nombre équipement
+    <input type="number" min="0" step="1" formControlName="nombre" />
+  </label>
+
+  <div class="actions">
+    <button class="btn btn-primary" type="submit" [disabled]="enregistrement()">
+      {{ equipement() ? 'Enregistrer' : 'Ajouter' }}
+    </button>
+    @if (equipement()) {
+      <button class="btn btn-ghost" type="button" (click)="cancel.emit()">Annuler</button>
+    }
+  </div>
+</form>
+
+@if (form.touched && form.invalid) {
+  <p class="alert alert-error">
+    @if (form.hasError('datesInversees')) {
+      La date de fin doit être postérieure ou égale à la date de début.
+    } @else {
+      Tous les champs sont obligatoires (nombre ≥ 0).
+    }
+  </p>
+}

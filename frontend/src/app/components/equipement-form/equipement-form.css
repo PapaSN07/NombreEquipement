@@ -1,0 +1,9 @@
+h2 { font-size: 1.05rem; margin: 0 0 16px; color: var(--primary); }
+.grid-form { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
+.grid-form > * { min-width: 0; }
+.actions { display: flex; gap: 8px; }
+
+@media (max-width: 800px) {
+  .grid-form { grid-template-columns: 1fr 1fr; }
+  .grid-form label:first-child, .actions { grid-column: 1 / -1; }
+}
