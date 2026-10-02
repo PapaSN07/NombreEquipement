@@ -1,0 +1,17 @@
+/* Styles propres à cette page.
+   Les classes génériques (.card, .btn, .alert, .table-wrap, ...) restent
+   dans ton styles.css global. */
+
+tr.editing {
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.actions-col {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.confirm {
+  margin-right: 0.5rem;
+  font-weight: 600;
+}

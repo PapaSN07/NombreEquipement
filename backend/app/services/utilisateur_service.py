@@ -30,20 +30,19 @@ def _nb_admins_actifs(db: Session) -> int:
     ) or 0
 
 
-def create(db: Session, data: UtilisateurCreate) -> Utilisateur:
-    email = data.email.lower()
-    if db.scalars(select(Utilisateur).where(func.lower(Utilisateur.email) == email)).first():
-        raise UtilisateurError("Cet email existe déjà.", 409)
-    u = Utilisateur(
-        email=email,
-        mot_de_passe_hash=hash_password(data.mot_de_passe),
+def create_user(db: Session, data: UtilisateurCreate) -> Utilisateur:
+    """Construit l'utilisateur avec la gestion de la source (local ou ldap)"""
+    user = Utilisateur(
+        email=data.email.lower(),
+        mot_de_passe_hash=hash_password(data.mot_de_passe) if data.source == "local" else None,
         role=data.role,
         actif=True,
+        source=data.source,
     )
-    db.add(u)
-    db.commit()
-    db.refresh(u)
-    return u
+    db.add(user)
+    db.commit() # Optionnel si géré par le routeur, mais recommandé pour persister l'ID
+    db.refresh(user)
+    return user
 
 
 def update(db: Session, user_id: int, data: UtilisateurUpdate, current_id: int) -> Utilisateur:

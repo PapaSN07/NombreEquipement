@@ -18,6 +18,10 @@ class Settings(BaseSettings):
 
     CORS_ORIGINS: str = "http://localhost:4200"
 
+    LDAP_ENABLED: bool = False
+    LDAP_SERVER: str = "ldap://10.101.2.30:389"
+    LDAP_TIMEOUT: int = 5
+
     # Dossier des fichiers Excel parcouru au démarrage (relatif au dossier backend/)
     DATA_DIR: str = "data"
 

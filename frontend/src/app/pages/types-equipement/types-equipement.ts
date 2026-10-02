@@ -8,63 +8,8 @@ import { TypeEquipementService } from '../../services/type-equipement.service';
 @Component({
   selector: 'app-types-equipement',
   imports: [Navbar, ReactiveFormsModule],
-  template: `
-    <app-navbar />
-    <main class="page">
-      <section class="card">
-        <h2>{{ enEdition() ? "Modifier le type" : "Nouveau type d'équipement" }}</h2>
-        <form class="grid-form" [formGroup]="form" (ngSubmit)="submit()">
-          <label>
-            Nom
-            <input type="text" formControlName="nom" maxlength="50" />
-          </label>
-          <div class="actions">
-            <button class="btn btn-primary" type="submit" [disabled]="form.invalid || enregistrement()">
-              {{ enEdition() ? 'Enregistrer' : 'Ajouter' }}
-            </button>
-            @if (enEdition()) {
-              <button class="btn btn-ghost" type="button" (click)="annuler()">Annuler</button>
-            }
-          </div>
-        </form>
-        @if (erreur()) { <p class="alert alert-error">{{ erreur() }}</p> }
-        @if (succes()) { <p class="alert alert-success">{{ succes() }}</p> }
-      </section>
-
-      <section class="card">
-        <h2>Types <span class="muted">({{ types().length }})</span></h2>
-        @if (types().length === 0) {
-          <p class="muted">Aucun type.</p>
-        } @else {
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>ID</th><th>Nom</th><th class="actions-col">Actions</th></tr></thead>
-              <tbody>
-                @for (t of types(); track t.id) {
-                  <tr [class.editing]="enEdition()?.id === t.id">
-                    <td>{{ t.id }}</td>
-                    <td>{{ t.nom }}</td>
-                    <td class="actions-col">
-                      @if (suppressionId() === t.id) {
-                        <span class="confirm">Supprimer ?</span>
-                        <button class="btn btn-small btn-danger" type="button" (click)="supprimer(t)">Oui</button>
-                        <button class="btn btn-small btn-ghost" type="button" (click)="suppressionId.set(null)">Non</button>
-                      } @else {
-                        <button class="btn btn-small" type="button" (click)="modifier(t)">Modifier</button>
-                        <button class="btn btn-small btn-ghost-danger" type="button" (click)="suppressionId.set(t.id)">
-                          Supprimer
-                        </button>
-                      }
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-        }
-      </section>
-    </main>
-  `,
+  templateUrl: './types-equipement.html',
+  styleUrl: './types-equipement.css',
 })
 export class TypesEquipement implements OnInit {
   private fb = inject(FormBuilder);

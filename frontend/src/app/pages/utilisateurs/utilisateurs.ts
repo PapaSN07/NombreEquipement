@@ -9,82 +9,8 @@ import { UtilisateurService } from '../../services/utilisateur.service';
 @Component({
   selector: 'app-utilisateurs',
   imports: [Navbar, ReactiveFormsModule],
-  template: `
-    <app-navbar />
-    <main class="page">
-      <section class="card">
-        <h2>{{ enEdition() ? 'Modifier ' + enEdition()!.email : 'Nouvel utilisateur' }}</h2>
-        <form class="grid-form" [formGroup]="form" (ngSubmit)="submit()">
-          <label>
-            Email
-            <input type="email" formControlName="email" />
-          </label>
-          <label>
-            {{ enEdition() ? 'Nouveau mot de passe (optionnel)' : 'Mot de passe (8 caractères min.)' }}
-            <input type="password" formControlName="mot_de_passe" autocomplete="new-password" />
-          </label>
-          <label>
-            Rôle
-            <select formControlName="role">
-              <option value="utilisateur">Utilisateur</option>
-              <option value="admin">Administrateur</option>
-            </select>
-          </label>
-          @if (enEdition()) {
-            <label>
-              Statut
-              <select formControlName="actif">
-                <option [ngValue]="true">Actif</option>
-                <option [ngValue]="false">Désactivé</option>
-              </select>
-            </label>
-          }
-          <div class="actions">
-            <button class="btn btn-primary" type="submit" [disabled]="form.invalid || enregistrement()">
-              {{ enEdition() ? 'Enregistrer' : 'Créer' }}
-            </button>
-            @if (enEdition()) {
-              <button class="btn btn-ghost" type="button" (click)="annuler()">Annuler</button>
-            }
-          </div>
-        </form>
-        @if (erreur()) { <p class="alert alert-error">{{ erreur() }}</p> }
-        @if (succes()) { <p class="alert alert-success">{{ succes() }}</p> }
-      </section>
-
-      <section class="card">
-        <h2>Utilisateurs <span class="muted">({{ users().length }})</span></h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>Email</th><th>Rôle</th><th>Statut</th><th class="actions-col">Actions</th></tr>
-            </thead>
-            <tbody>
-              @for (u of users(); track u.id) {
-                <tr [class.editing]="enEdition()?.id === u.id">
-                  <td>{{ u.email }} @if (u.email === auth.email()) { <span class="muted">(vous)</span> }</td>
-                  <td>{{ u.role === 'admin' ? 'Administrateur' : 'Utilisateur' }}</td>
-                  <td>{{ u.actif ? 'Actif' : 'Désactivé' }}</td>
-                  <td class="actions-col">
-                    @if (suppressionId() === u.id) {
-                      <span class="confirm">Supprimer ?</span>
-                      <button class="btn btn-small btn-danger" type="button" (click)="supprimer(u)">Oui</button>
-                      <button class="btn btn-small btn-ghost" type="button" (click)="suppressionId.set(null)">Non</button>
-                    } @else {
-                      <button class="btn btn-small" type="button" (click)="modifier(u)">Modifier</button>
-                      <button class="btn btn-small btn-ghost-danger" type="button" (click)="suppressionId.set(u.id)">
-                        Supprimer
-                      </button>
-                    }
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-  `,
+  templateUrl: './utilisateurs.html',
+  styleUrl: './utilisateurs.css',
 })
 export class Utilisateurs implements OnInit {
   private fb = inject(FormBuilder);
